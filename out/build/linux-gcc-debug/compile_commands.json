@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/workspaces/CppProgramminLab1/out/build/linux-gcc-debug",
-  "command": "/usr/bin/c++ -g -o CMakeFiles/CppProgramminLab1.dir/main.cpp.o -c /workspaces/CppProgramminLab1/main.cpp",
-  "file": "/workspaces/CppProgramminLab1/main.cpp",
-  "output": "CMakeFiles/CppProgramminLab1.dir/main.cpp.o"
-}
-]
