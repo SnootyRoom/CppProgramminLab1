@@ -28,4 +28,4 @@ jobs:
             - name: Run Program to Test Sanitizers
               run: |
                 echo "Run programm with sanitizers"
-                ./out/build/linux-gcc-asan/
+                ./out/build/linux-gcc-asan/CppProgramminLab1
