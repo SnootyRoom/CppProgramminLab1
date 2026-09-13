@@ -3,8 +3,8 @@
 int main(int, char**){
     std::cout << "Hello, from CppProgramminLab1!\n";
 
-    // Checking UB
+    // UB fixed
     int arr[5];
-    arr[10] = 5; 
+    arr[0] = 5; 
 
 }
