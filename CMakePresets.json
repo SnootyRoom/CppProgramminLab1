@@ -37,8 +37,8 @@
             "inherits": "base-linux",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_C_COMPILER": "-g -fsanitize=address,undefined",
-                "CMAKE_CXX_COMPILER": "-g -fsanitize=address,undefined"
+                "CMAKE_C_FLAGS_DEBUG": "-g -fsanitize=address,undefined",
+                "CMAKE_CXX_FLAGS_DEBUG": "-g -fsanitize=address,undefined"
             }
         },
         {
