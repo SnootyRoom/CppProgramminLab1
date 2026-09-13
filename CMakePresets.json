@@ -2,9 +2,19 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "GCC 15.2.0 x86_64-w64-mingw32 (mingw64)",
+            "name": "base-linux",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "{sourceDir}/out/install/${presetName}"
+            }
+        },
+        {
+            "name": "windows-mingw-debug",
             "displayName": "GCC 15.2.0 x86_64-w64-mingw32 (mingw64)",
             "description": "Using compilers: C = C:\\msys64\\mingw64\\bin\\gcc.exe, CXX = C:\\msys64\\mingw64\\bin\\g++.exe",
+            "generator": "Ninja",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
@@ -12,6 +22,46 @@
                 "CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/g++.exe",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "linux-gcc-debug",
+            "displayName": "Linux GCC Debug",
+            "inherits": "base-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-gcc-asan",
+            "displayName": "Linux GCC (Address/UB Sanitizers)",
+            "inherits": "base-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "-g -fsanitize=address,undefined",
+                "CMAKE_CXX_COMPILER": "-g -fsanitize=address,undefined"
+            }
+        },
+        {
+            "name": "linux-gcc-release",
+            "displayName": "Linux GCC Release",
+            "inherits": "base-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-linux-debug",
+            "configurePreset": "linux-gcc-debug"
+        },
+        {
+            "name": "build-linux-asan",
+            "configurePreset": "linux-gcc-asan"
+        },
+        {
+            "name": "build-linux-release",
+            "configurePreset": "linux-gcc-release"
         }
     ]
 }
