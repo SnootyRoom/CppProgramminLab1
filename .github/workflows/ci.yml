@@ -17,7 +17,7 @@ jobs:
             - name: Install Tools (Ninja)
               run: |
                 sudo apt-get update
-                sodu apt-get install -y ninja-build gcc g++
+                sudo apt-get install -y ninja-build gcc g++
             
             - name: CMake Configure (ASAN Preset)
               run: cmake --preset linux-gcc-asan
