@@ -1,0 +1,31 @@
+name: 'C++ CI'
+
+on:
+    push:
+        branches:
+            - main
+            - feature/github_actions
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install Tools (Ninja)
+              run: |
+                sudo apt-get update
+                sodu apt-get install -y ninja-build gcc g++
+            
+            - name: CMake Configure (ASAN Preset)
+              run: cmake --preset linux-gcc-asan
+
+            - name: CMake Build
+              run: cmake --build --preset default-build
+
+            - name: Run Program to Test Sanitizers
+              run: |
+                echo "Run programm with sanitizers"
+                ./out/build/linux-gcc-asan/`
