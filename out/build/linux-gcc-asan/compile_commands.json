@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/workspaces/CppProgramminLab1/out/build/linux-gcc-asan",
+  "command": "/usr/bin/c++ -g -fsanitize=address,undefined -o CMakeFiles/CppProgramminLab1.dir/main.cpp.o -c /workspaces/CppProgramminLab1/main.cpp",
+  "file": "/workspaces/CppProgramminLab1/main.cpp",
+  "output": "CMakeFiles/CppProgramminLab1.dir/main.cpp.o"
+}
+]
