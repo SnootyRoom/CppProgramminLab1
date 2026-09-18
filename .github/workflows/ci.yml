@@ -13,14 +13,14 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         include:
           - os: ubuntu-latest
-            preset-configure: linux-gcc-asan
-            preset-build: build-linux-asan
-            artifact-path: ./out/build/linux-gcc-asan/CppProgramminLab1
+            preset-configure: linux-gcc-release
+            preset-build: build-linux-release
+            artifact-path: ./out/build/linux-gcc-release/CppProgramminLab1
           - os: windows-latest
-            preset-configure: windows-mingw-debug
-            preset-build: build-windows-debug
+            preset-configure: windows-mingw-release
+            preset-build: build-windows-release
 
-            artifact-path: ./out/build/windows-mingw-debug/CppProgramminLab1.exe
+            artifact-path: ./out/build/windows-mingw-release/CppProgramminLab1.exe
 
     runs-on: ${{ matrix.os }}
     permissions: write-all

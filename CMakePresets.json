@@ -11,16 +11,31 @@
             }
         },
         {
-            "name": "windows-mingw-debug",
-            "displayName": "GCC 15.2.0 x86_64-w64-mingw32 (mingw64)",
-            "description": "Using compilers: C = C:\\msys64\\mingw64\\bin\\gcc.exe, CXX = C:\\msys64\\mingw64\\bin\\g++.exe",
+            "name": "base-windows",
+            "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_EXE_LINKER_FLAGS": "-static"
+            }
+        },
+        {
+            "name": "windows-mingw-debug",
+            "displayName": "GCC 15.2.0 x86_64-w64-mingw32 (mingw64) debug",
+            "inherits": "base-windows",
+            "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "windows-mingw-release",
+            "displayName": "GCC 15.2.0 x86_64-w64-mingw32 (mingw64) release",
+            "inherits": "base-windows",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
@@ -66,6 +81,10 @@
         {
             "name": "build-windows-debug",
             "configurePreset": "windows-mingw-debug"
+        },
+        {
+            "name": "build-windows-release",
+            "configurePreset": "windows-mingw-release"
         }
     ]
 }
