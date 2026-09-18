@@ -62,6 +62,10 @@
         {
             "name": "build-linux-release",
             "configurePreset": "linux-gcc-release"
+        },
+        {
+            "name": "build-windows-debug",
+            "configurePreset": "windows-mingw-debug"
         }
     ]
 }

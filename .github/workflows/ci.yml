@@ -8,7 +8,21 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            preset-configure: linux-gcc-asan
+            preset-build: build-linux-asan
+            artifact-path: ./out/build/linux-gcc-asan/CppProgramminLab1
+          - os: windows-latest
+            preset-configure: windows-mingw-debug
+            preset-build: build-windows-debug
+
+            artifact-path: ./out/build/windows-msvc-release/CppProgramminLab1.exe
+
+    runs-on: ${{ matrix.os }}
     permissions: write-all
     
     steps:
@@ -16,39 +30,30 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Tools (Ninja)
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build gcc g++
       
-      - name: CMake Configure (ASAN Preset)
-        run: cmake --preset linux-gcc-asan
+      - name: CMake Configure
+        run: cmake --preset ${{ matrix.preset-configure }}
 
       - name: CMake Build
-        run: cmake --build --preset build-linux-asan
+        run: cmake --build --preset ${{ matrix.preset-build }}
 
       - name: Run Program to Test Sanitizers
+        if: matrix.os == 'ubuntu-latest'
         run: |
           echo "Run programm with sanitizers"
-          ./out/build/linux-gcc-asan/CppProgramminLab1
+          ${{ matrix.artifact-path }}
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v0.0.${{ github.run_number }}
-          release_name: Release v0.0.${{ github.run_number }}
+          name: Release v0.0.${{ github.run_number }}
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset 
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1 
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        with: 
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./out/build/linux-gcc-asan/CppProgramminLab1
-          asset_name: CppProgramminLab1-Linux
-          asset_content_type: application/octet-stream
+          files: ${{ matrix.artifact-path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
