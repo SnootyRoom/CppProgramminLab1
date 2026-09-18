@@ -1,31 +1,45 @@
 name: 'C++ CI'
 
 on:
-    push:
-        branches:
-            - main
-            - feature/github_actions
+  push:
+    branches:
+      - main
+      - feature/github_actions
 
 jobs:
-    build-and-test:
-        runs-on: ubuntu-latest
-        
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-            - name: Install Tools (Ninja)
-              run: |
-                sudo apt-get update
-                sudo apt-get install -y ninja-build gcc g++
-            
-            - name: CMake Configure (ASAN Preset)
-              run: cmake --preset linux-gcc-asan
+      - name: Install Tools (Ninja)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build gcc g++
+      
+      - name: CMake Configure (ASAN Preset)
+        run: cmake --preset linux-gcc-asan
 
-            - name: CMake Build
-              run: cmake --build --preset build-linux-asan
+      - name: CMake Build
+        run: cmake --build --preset build-linux-asan
 
-            - name: Run Program to Test Sanitizers
-              run: |
-                echo "Run programm with sanitizers"
-                ./out/build/linux-gcc-asan/CppProgramminLab1
+      - name: Run Program to Test Sanitizers
+        run: |
+          echo "Run programm with sanitizers"
+          ./out/build/linux-gcc-asan/CppProgramminLab1
+
+      # ВНИМАНИЕ: Для работы этого шага перед ним должен быть шаг СОЗДАНИЯ релиза,
+      # который генерирует outputs.upload_url. 
+      # Также убедитесь, что путь к .deb файлу совпадает с тем, куда его собирает CMake.
+      - name: Upload Release Asset 
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1 
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./out/build/linux-gcc-asan/CppProgramminLab1
+          asset_name: CppProgramminLab1-Linux
+          asset_content_type: application/octet-stream
