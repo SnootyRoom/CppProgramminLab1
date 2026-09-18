@@ -20,7 +20,7 @@ jobs:
             preset-configure: windows-mingw-debug
             preset-build: build-windows-debug
 
-            artifact-path: ./out/build/windows-msvc-release/CppProgramminLab1.exe
+            artifact-path: ./out/build/windows-mingw-debug/CppProgramminLab1.exe
 
     runs-on: ${{ matrix.os }}
     permissions: write-all
